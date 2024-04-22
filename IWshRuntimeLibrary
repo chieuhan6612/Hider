@@ -1,0 +1,59 @@
+using CommandLine;
+using IWshRuntimeLibrary;
+using System;
+using System.Runtime.InteropServices;
+
+class Program
+{
+    static void PrintHelp() {
+         Console.WriteLine("\t-h: print help");
+         Console.WriteLine("\t-t: text");
+         Console.WriteLine("\t-n: name");
+         Console.WriteLine("\t-o: output");
+    }
+    static Dictionary<string, string> HandleArguments(string[] args) {
+        var map = new Dictionary<string, string>();
+        for (int i = 0; i<args.Length; ++i){
+            if (args[i] == "-h") {
+                PrintHelp();
+                System.Environment.Exit(1);
+            }
+            if (args[i][0] == '-' && i+1 < args.Length) {
+                map.Add(args[i], args[i+1]);
+            }
+        }
+        return map;
+    }
+    static void print(Dictionary<string, string> dArgs)
+    {
+        try
+        {
+            Console.WriteLine(dArgs["-t"]);
+
+        }
+        catch (Exception)
+        {
+
+            Console.WriteLine("Error");
+        }
+    }
+    static void Main(string[] args)
+    {
+        var map = HandleArguments(args);
+        string kq = map["-t"];
+       
+        print(map);
+        return;
+        string output = "";
+        string text = "";
+        string name = "";
+
+        if (map.ContainsKey("-n")) { name = map["-n"]; }
+        if (map.ContainsKey("-t")) { text = map["-t"]; }
+        if (map.ContainsKey("-o")) { output = map["-o"]; }
+
+        Console.WriteLine("text: " + text);
+        Console.WriteLine("name: " + name);
+        Console.WriteLine("output: " + output);
+
+    }
